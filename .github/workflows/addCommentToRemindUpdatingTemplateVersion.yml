@@ -13,8 +13,13 @@ jobs:
     outputs:
       hasAutoDetectionComment: ${{ steps.job1.outputs.hasAutoDetectionComment }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
+        with:
+          egress-policy: audit
+
       - name: Find Comment
-        uses: peter-evans/find-comment@v3
+        uses: step-security/find-comment@1d7bf2a0c1b6802305aa3cf2e7c0e47568915caf # v4.0.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
